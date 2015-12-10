@@ -4,7 +4,8 @@ import aima.core.search.framework.HeuristicFunction;
 
 /**
  * El valor de la heurística será la distancia euclídea, módulo del vector
- * distancia entre los puntos inicial y final.
+ * distancia entre los puntos inicial y final, es decir, la raiz cuadrada de la
+ * diferencia de los puntos al cuadrado.
  */
 public class Heuristica1 implements HeuristicFunction {
 

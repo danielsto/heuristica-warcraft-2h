@@ -273,7 +273,7 @@ public class Ejecutar {
 		 * con la representación del camino óptimo.
 		 */
 		String fichero = argumento + ".output";
-		
+
 		/*
 		 * Se usan FileReader y BufferedReader para la apertura y lectura del
 		 * archivo.
@@ -320,7 +320,7 @@ public class Ejecutar {
 		 * extensión .statistics que contiene los datos de la ejecución de la
 		 * búsqueda.
 		 */
-		
+
 		String fichero = argumento + ".statistics";
 		/*
 		 * Se usan FileReader y BufferedReader para la apertura y lectura del
@@ -431,16 +431,22 @@ public class Ejecutar {
 
 			printActions(actionList);
 
+			String time = "Time: " + (t2 - t) / 1000.0 + " s";
+			System.out.println(time);
+
+			printInstrumentation(search.getMetrics());
+			Metrics metric = search.getMetrics();
+
+			/*
+			 * Se crean los archivos de salida mostrando la representación del
+			 * camino y los datos de la ejecución de la búsqueda.
+			 */
 			try {
 				mapaSalida(args[0], estadoInicial, actionList);
+				statsMap(args[0], time, metric);
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-			String time = "Time: " + (t2 - t) / 1000.0 + " s";
-			System.out.println(time);
-			printInstrumentation(search.getMetrics());
-			Metrics metric = search.getMetrics();
-			statsMap(args[0], time, metric);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
