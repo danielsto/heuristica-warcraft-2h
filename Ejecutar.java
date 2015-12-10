@@ -43,6 +43,15 @@ public class Ejecutar {
 		}
 	}
 
+	/**
+	 * Método que devuelve el enum correspondiente a la heurística pasada por
+	 * parámetros.
+	 * 
+	 * @param arg
+	 *            String con el nombre de la heurística a utilizar.
+	 * @return Enum con la heurística correspondiente. Null en caso de no
+	 *         existir.
+	 */
 	private static Heuristica getHeuristica(String arg) {
 		arg = arg.toLowerCase();
 		if (arg.equals("h1")) {
@@ -71,6 +80,7 @@ public class Ejecutar {
 		int[] coordenada = new int[2];
 		int i;
 
+		/* Recogemos la primera coordenada */
 		for (i = 0; i < argumento.length(); i++) {
 			if (argumento.charAt(0) == '-') {
 				System.err.println("No se admiten coordenadas negativas.");
@@ -83,7 +93,7 @@ public class Ejecutar {
 				break;
 			}
 		}
-
+		/* Empezando a contar desde el guión, recogemos la segunda coordenada */
 		for (int j = i; j < argumento.length(); j++) {
 			if (argumento.charAt(j) == '-') {
 				System.err.println("No se admiten coordenadas negativas.");
@@ -100,32 +110,34 @@ public class Ejecutar {
 		return coordenada;
 	}
 
-	/** Identificador para los algoritmos que pueden ejecutarse */
+	/* Identificador para los algoritmos que pueden ejecutarse */
 	public enum Algoritmo {
 		Amplitud, Profundidad, Astar, GBFS
 	};
 
-	/** Identificador para las heurísticas creadas */
+	/* Identificador para las heurísticas creadas */
 	public enum Heuristica {
 		H1, H2
 	};
 
 	/**
 	 * Método que recibe la dirección de un archivo de mapa y devuelve su
-	 * contenido en un String para su posterior consulta. Se usan FileReader y
-	 * BufferedReader para la apertura y lectura del archivo.
+	 * contenido en un String para su posterior consulta.
 	 * 
 	 * @param direccion
 	 *            String que contiene la ubicación del archivo.
 	 * @return mapa String que contiene el mapa en una sola línea.
 	 */
 	public static String getMapa(String direccion) {
-		FileReader fr = null;
+		/*
+		 * Se usan FileReader y BufferedReader para la apertura y lectura del
+		 * archivo.
+		 */
+		BufferedReader br = null;
 		String mapa = "";
 
 		try {
-			fr = new FileReader(direccion);
-			BufferedReader br = new BufferedReader(fr);
+			br = new BufferedReader(new FileReader(direccion));
 			String linea;
 			int contadorLineas = 1;
 			/*
@@ -144,8 +156,8 @@ public class Ejecutar {
 		} finally {
 			/* Cerramos el fichero tanto si salta una excepción como si no */
 			try {
-				if (fr != null) {
-					fr.close();
+				if (br != null) {
+					br.close();
 				}
 			} catch (Exception e2) {
 				e2.printStackTrace();
@@ -185,8 +197,12 @@ public class Ejecutar {
 	 *            Lista de acciones que han de realizarse para obtener el camino
 	 *            óptimo.
 	 * @throws IOException
+	 *             si el fichero existe pero es un directorio en vez de un
+	 *             archivo, no existe pero no puede ser creado, o no puede ser
+	 *             abierto por cualquier otra razón.
 	 */
-	public static void mapaSalida(String argumento, Estado estadoInicial, List<Action> actionList) throws IOException {
+	public static void mapaSalida(String argumento, Estado estadoInicial,
+			List<Action> actionList) throws IOException {
 		char matriz[][] = new char[512][512];
 		int i = 0, j = 0;
 
@@ -224,7 +240,7 @@ public class Ejecutar {
 		 */
 		int coordX = estadoInicial.x;
 		int coordY = estadoInicial.y;
-		System.out.println("(" + coordX + ", " + coordY + ")");
+		System.out.println("(" + coordX + ", " + coordY + ")"); //QUITAR ESTO ANTES DE ENVIAR EL CÓDIGO
 		for (i = 0; i < actionList.size() - 1; i++) {
 			switch (actionList.get(i).toString()) {
 			case "NORTE":
@@ -257,6 +273,11 @@ public class Ejecutar {
 		 * con la representación del camino óptimo.
 		 */
 		String fichero = argumento + ".output";
+		
+		/*
+		 * Se usan FileReader y BufferedReader para la apertura y lectura del
+		 * archivo.
+		 */
 		BufferedWriter bw = null;
 		try {
 			bw = new BufferedWriter(new FileWriter(fichero));
@@ -275,8 +296,36 @@ public class Ejecutar {
 		}
 	}
 
-	public static void statsMap(String argumento, String time, Metrics metric) throws IOException {
+	/**
+	 * Método que se encarga de crear el archivo que contendrá los datos de la
+	 * ejecución del tipo de búsqueda, como el tiempo, coste total, nodos
+	 * extandidos, etc.
+	 * 
+	 * @param argumento
+	 *            Ubicación y nombre del fichero a crear
+	 * @param time
+	 *            Tiempo que tarda en ejecutarse la búsqueda
+	 * @param metric
+	 *            Metric que contiene los datos de coste total, tamaño de la
+	 *            lista, tamaño máximo de la lista y nodos expandidos.
+	 * @throws IOException
+	 *             si el fichero existe pero es un directorio en vez de un
+	 *             archivo, no existe pero no puede ser creado, o no puede ser
+	 *             abierto por cualquier otra razón.
+	 */
+	public static void statsMap(String argumento, String time, Metrics metric)
+			throws IOException {
+		/*
+		 * Se crea un archivo con el nombre del archivo del mapa sumando la
+		 * extensión .statistics que contiene los datos de la ejecución de la
+		 * búsqueda.
+		 */
+		
 		String fichero = argumento + ".statistics";
+		/*
+		 * Se usan FileReader y BufferedReader para la apertura y lectura del
+		 * archivo.
+		 */
 		BufferedWriter bw2 = null;
 		try {
 			bw2 = new BufferedWriter(new FileWriter(fichero));
@@ -298,7 +347,8 @@ public class Ejecutar {
 
 	public static void main(String args[]) {
 		if (args.length != 5) {
-			System.out.println("Utilizacion: java Ejecutar <mapa> <algoritmo> <heuristica> <pos inicial> <pos final>");
+			System.out
+					.println("Utilizacion: java Ejecutar <mapa> <algoritmo> <heuristica> <pos inicial> <pos final>");
 			System.exit(0);
 		}
 		/*
@@ -334,7 +384,8 @@ public class Ejecutar {
 		estadoInicial.toString();
 
 		try {
-			Problem problem = new Problem(estadoInicial, accDisponibles, resAccion, fMetas, costeAccion);
+			Problem problem = new Problem(estadoInicial, accDisponibles,
+					resAccion, fMetas, costeAccion);
 
 			HeuristicFunction hf = null;
 			switch (heuristica) {

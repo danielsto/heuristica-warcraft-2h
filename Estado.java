@@ -1,18 +1,41 @@
 package aima.core.environment.warcraft;
+
+/**
+ * Los estados estarán formados por dos coordenadas que indican la posicion en
+ * el mapa (x,y). Se crearán a partir de un vector de ints de tamaño dos que
+ * será pasado por parámetro al constructor.
+ */
 public class Estado {
 
 	int x;
 	int y;
 
+	/**
+	 * Constructor de estado dadas las coordenadas.
+	 * 
+	 * @param posicion
+	 *            Vector de ints que contiene las coordenadas.
+	 */
 	public Estado(int[] posicion) {
 		this.x = posicion[0];
 		this.y = posicion[1];
 	}
 
+	/**
+	 * Constructor de copia de un estado.
+	 * 
+	 * @param otro
+	 *            Estado que se quiere copiar.
+	 */
 	public Estado(Estado otro) {
 		this.x = otro.x;
 		this.y = otro.y;
 	}
+
+	/*
+	 * También se han creado los métodos hashCode, equals y toString que son
+	 * necesarios para el correcto funcionamiento de la librería aima.
+	 */
 
 	@Override
 	public int hashCode() {
