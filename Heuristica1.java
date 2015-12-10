@@ -4,14 +4,14 @@ import aima.core.search.framework.HeuristicFunction;
 
 public class Heuristica1 implements HeuristicFunction {
 
-	public Heuristica1() {
-		// TODO Auto-generated constructor stub
-	}
-
 	/**
 	 * El valor de la heurística será la distancia euclídea, módulo del vector
 	 * distancia entre los puntos inicial y final.
 	 */
+	public Heuristica1() {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public double h(Object state) {
 		// TODO Auto-generated method stub
