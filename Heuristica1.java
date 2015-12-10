@@ -8,6 +8,10 @@ public class Heuristica1 implements HeuristicFunction {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * El valor de la heurística será la distancia euclídea, módulo del vector
+	 * distancia entre los puntos inicial y final.
+	 */
 	@Override
 	public double h(Object state) {
 		// TODO Auto-generated method stub
@@ -15,7 +19,7 @@ public class Heuristica1 implements HeuristicFunction {
 		int restaX = Ejecutar.estadoFinal.x - estado.x;
 		int restaY = Ejecutar.estadoFinal.y - estado.y;
 		double valorHeuristica = Math.sqrt(Math.pow(restaX, 2) + Math.pow(restaY, 2));
-		
+
 		return valorHeuristica;
 	}
 
