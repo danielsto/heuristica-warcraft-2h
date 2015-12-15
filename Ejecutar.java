@@ -19,8 +19,8 @@ import aima.core.search.uninformed.DepthFirstSearch;
 
 public class Ejecutar {
 	/*
-	 * Variables est·ticas que ser·n necesarias para la correcta ejecuciÛn de
-	 * otras clases.
+	 * Variables est√°ticas que ser√°n necesarias para la correcta ejecuci√≥n de
+	 * otras clases, como son el mapa, el ancho del mapa y el estado final.
 	 */
 	public static String mapa = "";
 	private final static int WIDTH = 512;
@@ -44,12 +44,12 @@ public class Ejecutar {
 	}
 
 	/**
-	 * MÈtodo que devuelve el enum correspondiente a la heurÌstica pasada por
-	 * par·metros.
+	 * M√©todo que devuelve el enum correspondiente a la heur√≠stica pasada por
+	 * par√°metros.
 	 * 
 	 * @param arg
-	 *            String con el nombre de la heurÌstica a utilizar.
-	 * @return Enum con la heurÌstica correspondiente. Null en caso de no
+	 *            String con el nombre de la heur√≠stica a utilizar.
+	 * @return Enum con la heur√≠stica correspondiente. Null en caso de no
 	 *         existir.
 	 */
 	private static Heuristica getHeuristica(String arg) {
@@ -66,12 +66,12 @@ public class Ejecutar {
 	}
 
 	/**
-	 * MÈtodo que devuelve la coordenada pasada por par·metros en un vector de
+	 * M√©todo que devuelve la coordenada pasada por par√°metros en un vector de
 	 * int.
 	 * 
 	 * @param argumento
 	 *            Coordenada en un String de forma X-Y.
-	 * @return coordenada Vector de int de tamaÒo 2 que contiene las
+	 * @return coordenada Vector de int de tama√±o 2 que contiene las
 	 *         coordenadas.
 	 */
 	private static int[] getCoordenada(String argumento) {
@@ -93,7 +93,7 @@ public class Ejecutar {
 				break;
 			}
 		}
-		/* Empezando a contar desde el guiÛn, recogemos la segunda coordenada */
+		/* Empezando a contar desde el gui√≥n, recogemos la segunda coordenada */
 		for (int j = i; j < argumento.length(); j++) {
 			if (argumento.charAt(j) == '-') {
 				System.err.println("No se admiten coordenadas negativas.");
@@ -101,7 +101,8 @@ public class Ejecutar {
 			}
 			coordY = coordY + argumento.charAt(j);
 		}
-
+		
+		/* Cambiamos las coordenadas a int y las insertamos en el vector*/
 		int x = Integer.parseInt(coordX);
 		int y = Integer.parseInt(coordY);
 		coordenada[0] = x;
@@ -115,18 +116,18 @@ public class Ejecutar {
 		Amplitud, Profundidad, Astar, GBFS
 	};
 
-	/* Identificador para las heurÌsticas creadas */
+	/* Identificador para las heur√≠sticas creadas */
 	public enum Heuristica {
 		H1, H2
 	};
 
 	/**
-	 * MÈtodo que recibe la direcciÛn de un archivo de mapa y devuelve su
+	 * M√©todo que recibe la direcci√≥n de un archivo de mapa y devuelve su
 	 * contenido en un String para su posterior consulta.
 	 * 
 	 * @param direccion
-	 *            String que contiene la ubicaciÛn del archivo.
-	 * @return mapa String que contiene el mapa en una sola lÌnea.
+	 *            String que contiene la ubicaci√≥n del archivo.
+	 * @return mapa String que contiene el mapa en una sola l√≠nea.
 	 */
 	public static String getMapa(String direccion) {
 		/*
@@ -154,7 +155,7 @@ public class Ejecutar {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			/* Cerramos el fichero tanto si salta una excepciÛn como si no */
+			/* Cerramos el fichero tanto si salta una excepci√≥n como si no */
 			try {
 				if (br != null) {
 					br.close();
@@ -169,14 +170,14 @@ public class Ejecutar {
 	}
 
 	/**
-	 * MÈtodo para obtener el obst·culo asociado a unas coordenadas que han sido
-	 * introducidas por par·metros.
+	 * M√©todo para obtener el obst√°culo asociado a unas coordenadas que han sido
+	 * introducidas por par√°metros.
 	 * 
 	 * @param x
-	 *            Coordenada x correspondiente a la posiciÛn
+	 *            Coordenada x correspondiente a la posici√≥n
 	 * @param y
-	 *            Coordenada y correspondiente a la posiciÛn
-	 * @return Obst·culo asociado a la coordenada
+	 *            Coordenada y correspondiente a la posici√≥n
+	 * @return Obst√°culo asociado a la coordenada
 	 */
 	public static char getObstaculo(int x, int y) {
 		char caracter;
@@ -186,20 +187,20 @@ public class Ejecutar {
 	}
 
 	/**
-	 * MÈtodo que se encarga de crear el archivo que contendr· la representaciÛn
-	 * del camino Ûptimo obtenido por el algoritmo.
+	 * M√©todo que se encarga de crear el archivo que contendr√° la representaci√≥n
+	 * del camino √≥ptimo obtenido por el algoritmo.
 	 * 
 	 * @param argumento
-	 *            UbicaciÛn del archivo que contiene el mapa
+	 *            Ubicaci√≥n del archivo que contiene el mapa
 	 * @param estadoInicial
 	 *            Estado desde donde se parte
 	 * @param actionList
 	 *            Lista de acciones que han de realizarse para obtener el camino
-	 *            Ûptimo.
+	 *            √≥ptimo.
 	 * @throws IOException
 	 *             si el fichero existe pero es un directorio en vez de un
 	 *             archivo, no existe pero no puede ser creado, o no puede ser
-	 *             abierto por cualquier otra razÛn.
+	 *             abierto por cualquier otra raz√≥n.
 	 */
 	public static void mapaSalida(String argumento, Estado estadoInicial,
 			List<Action> actionList) throws IOException {
@@ -208,11 +209,11 @@ public class Ejecutar {
 
 		/*
 		 * Pasamos el mapa, el cual estaba guardado en un String, a una matriz.
-		 * De esta forma ser· m·s f·cil reemplazar casillas con las letras que
-		 * nos interesen para su posterior impresiÛn.
+		 * De esta forma ser√° m√°s f√°cil reemplazar casillas con las letras que
+		 * nos interesen para su posterior impresi√≥n.
 		 * 
 		 * Se guardan en las casillas las letras correspondientes a los
-		 * obst·culos y se aÒaden las letras 'I' para indicar la casilla del
+		 * obst√°culos y se a√±aden las letras 'I' para indicar la casilla del
 		 * estado inicial y la letra 'F' para indicar la casilla del estado
 		 * final.
 		 */
@@ -233,14 +234,14 @@ public class Ejecutar {
 		}
 
 		/*
-		 * A partir de la lista de acciones, se va aÒadiendo una 'X' en las
-		 * casillas de la matriz correspondientes marcando el camino Ûptimo. Se
-		 * parte desde el estado inicial y para evitar que se aÒada una 'X' en
-		 * el estado final, se avanza hasta la pen˙ltima acciÛn.
+		 * A partir de la lista de acciones, se va a√±adiendo una 'X' en las
+		 * casillas de la matriz correspondientes marcando el camino √≥ptimo. Se
+		 * parte desde el estado inicial y para evitar que se a√±ada una 'X' en
+		 * el estado final, se avanza hasta la pen√∫ltima acci√≥n.
 		 */
 		int coordX = estadoInicial.x;
 		int coordY = estadoInicial.y;
-		System.out.println("(" + coordX + ", " + coordY + ")"); //QUITAR ESTO ANTES DE ENVIAR EL C”DIGO
+		System.out.println("(" + coordX + ", " + coordY + ")"); //QUITAR ESTO ANTES DE ENVIAR EL C√ìDIGO
 		for (i = 0; i < actionList.size() - 1; i++) {
 			switch (actionList.get(i).toString()) {
 			case "NORTE":
@@ -269,8 +270,8 @@ public class Ejecutar {
 
 		/*
 		 * Se crea un archivo con el nombre del archivo del mapa sumando la
-		 * extensiÛn .output que contiene la matriz impresa, es decir, el mapa
-		 * con la representaciÛn del camino Ûptimo.
+		 * extensi√≥n .output que contiene la matriz impresa, es decir, el mapa
+		 * con la representaci√≥n del camino √≥ptimo.
 		 */
 		String fichero = argumento + ".output";
 
@@ -297,30 +298,30 @@ public class Ejecutar {
 	}
 
 	/**
-	 * MÈtodo que se encarga de crear el archivo que contendr· los datos de la
-	 * ejecuciÛn del tipo de b˙squeda, como el tiempo, coste total, nodos
+	 * M√©todo que se encarga de crear el archivo que contendr√° los datos de la
+	 * ejecuci√≥n del tipo de b√∫squeda, como el tiempo, coste total, nodos
 	 * extandidos, etc.
 	 * 
 	 * @param argumento
-	 *            UbicaciÛn y nombre del fichero a crear
+	 *            Ubicaci√≥n y nombre del fichero a crear
 	 * @param time
-	 *            Tiempo que tarda en ejecutarse la b˙squeda
+	 *            Tiempo que tarda en ejecutarse la b√∫squeda
 	 * @param metric
-	 *            Metric que contiene los datos de coste total, tamaÒo de la
-	 *            lista, tamaÒo m·ximo de la lista y nodos expandidos.
+	 *            Metric que contiene los datos de coste total, tama√±o de la
+	 *            lista, tama√±o m√°ximo de la lista y nodos expandidos.
 	 * @param planLength
 	 *            Longitud del camino recorrido
 	 * @throws IOException
 	 *             si el fichero existe pero es un directorio en vez de un
 	 *             archivo, no existe pero no puede ser creado, o no puede ser
-	 *             abierto por cualquier otra razÛn.
+	 *             abierto por cualquier otra raz√≥n.
 	 */
 	public static void statsMap(String argumento, String time, Metrics metric,
 			int planLength) throws IOException {
 		/*
 		 * Se crea un archivo con el nombre del archivo del mapa sumando la
-		 * extensiÛn .statistics que contiene los datos de la ejecuciÛn de la
-		 * b˙squeda.
+		 * extensi√≥n .statistics que contiene los datos de la ejecuci√≥n de la
+		 * b√∫squeda.
 		 */
 
 		String fichero = argumento + ".statistics";
@@ -359,8 +360,8 @@ public class Ejecutar {
 		 * Se recogen los argumentos que se han recibido de la consola y se
 		 * guardan en sus correspondientes variables u objetos.
 		 * 
-		 * El mapa recogido por el primer arguemento ser· un String est·tico, ya
-		 * que ser· necesario acceder a Èl desde otras clases.
+		 * El mapa recogido por el primer arguemento ser√° un String est√°tico, ya
+		 * que ser√° necesario acceder a √©l desde otras clases.
 		 */
 		mapa = getMapa(args[0]);
 		Algoritmo algoritmo = getAlgoritmo(args[1]);
@@ -369,11 +370,11 @@ public class Ejecutar {
 		int[] posFinal = getCoordenada(args[4]);
 
 		/*
-		 * Los estados inicial y final ser·n creados a travÈs de los vectores
-		 * int con las coordenadas de su posiciÛn.
+		 * Los estados inicial y final ser√°n creados a trav√©s de los vectores
+		 * int con las coordenadas de su posici√≥n.
 		 * 
-		 * El estado final ser· un Estado est·tico, ya que ser· necesario
-		 * acceder a Èl desde otras clases.
+		 * El estado final ser√° un Estado est√°tico, ya que ser√° necesario
+		 * acceder a √©l desde otras clases.
 		 */
 		Estado estadoInicial = new Estado(posInicial);
 		estadoFinal = new Estado(posFinal);
@@ -398,7 +399,7 @@ public class Ejecutar {
 				hf = new Heuristica1();
 				break;
 			case H2:
-				System.out.println("HeurÌstica: h2");
+				System.out.println("Heur√≠stica: h2");
 				hf = new Heuristica2();
 				break;
 			default:
@@ -443,8 +444,8 @@ public class Ejecutar {
 			Metrics metric = search.getMetrics();
 
 			/*
-			 * Se crean los archivos de salida mostrando la representaciÛn del
-			 * camino y los datos de la ejecuciÛn de la b˙squeda.
+			 * Se crean los archivos de salida mostrando la representaci√≥n del
+			 * camino y los datos de la ejecuci√≥n de la b√∫squeda.
 			 */
 			try {
 				mapaSalida(args[0], estadoInicial, actionList);
